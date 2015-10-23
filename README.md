@@ -31,4 +31,4 @@ js
         ]
     });
 
-	$.tabbedBar.getIndex();
+	$.tabbedbar.getIndex();
