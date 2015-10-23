@@ -25,7 +25,7 @@ js
     $.tabbedbar.load({
         index: 0,
         labels: [
-            { title: 'Browse' },
+            { title: 'Browse' }, // { enabled: true, image: '', title: '', width: 100 }
             { title: 'Applied' },
             { title: 'Upcoming' }
         ]
