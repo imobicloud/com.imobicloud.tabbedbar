@@ -1,4 +1,3 @@
 <Alloy>
-	<TabbedBar id="tabbedbar" class="imc-tabbedbar" platform="ios" onClick="tabbedbarClick"/>
-	<View id="tabbedbar" class="imc-tabbedbar" platform="android" onClick="tabbedbarClick"/>
+	<View id="container" height="Ti.UI.SIZE"/>
 </Alloy>

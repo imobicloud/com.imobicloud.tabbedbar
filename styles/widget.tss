@@ -1,5 +1,5 @@
 /*
-".imc-tabbedbar[platform=ios]": { backgroundColor: '#fff' }
+".imc-tabbedbar[platform=ios]": { backgroundColor: '#fff', style: Titanium.UI.iPhone.SystemButtonStyle.BAR }
 ".imc-tabbedbar[platform=android]": { width: Ti.UI.SIZE, height: 30, backgroundColor: '#fff', borderColor: '#fff', borderRadius: 3, borderWidth: 1, layout: 'horizontal' }
 	".imc-tabbedbar-tab[platform=android]": { left: 1 }
 	".imc-tabbedbar-tab-first[platform=android]": { left: 0 }
