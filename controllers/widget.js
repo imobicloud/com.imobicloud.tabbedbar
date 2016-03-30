@@ -35,20 +35,16 @@ exports.load = function(_G, params) {
 				icon = label.imageOn || label.image;
 				status = '-on';
 			}
-			var tab = G.UI.create('View', { tabIndex: i, classes: 'imc-tabbedbar-tab imc-tabbedbar-tab' + status });
+			var tab = G.UI.create('View', { tabIndex: i, classes: 'imc-tabbedbar-tab imc-tabbedbar-tab-' + i + ' imc-tabbedbar-tab' + status });
 				if (i === 0) {
 					tab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-first' }) );
 				}
 				label.width != null && (tab.width = label.width);
 				label.enabled != null && (tab.touchEnabled = label.enabled);
-				label.image && tab.add( G.UI.create('ImageView', { image: icon, classes: 'imc-tabbedbar-icon', touchEnabled: false }) );
-				label.title && tab.add( G.UI.create('Label', { text: label.title, classes: 'imc-tabbedbar-title imc-tabbedbar-title' + status, touchEnabled: false }) );
+				label.image && tab.add( G.UI.create('ImageView', { image: icon, classes: 'imc-tabbedbar-icon imc-tabbedbar-icon-' + i, touchEnabled: false }) );
+				label.title && tab.add( G.UI.create('Label', { text: label.title, classes: 'imc-tabbedbar-title imc-tabbedbar-title-' + i + ' imc-tabbedbar-title' + status, touchEnabled: false }) );
 				if (params.useDivider) {
-					if (i) {
-						tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider', touchEnabled: false }) );
-					} else {
-						tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider imc-tabbedbar-divider-first', touchEnabled: false }) );
-					}
+					tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider imc-tabbedbar-divider-' + i, touchEnabled: false }) );
 				}
 		  	tabbedbar.add(tab);
 		};
@@ -81,17 +77,8 @@ function tabbedbarClick(e) {
 		var lastIndex = tabbedbar.index;
 		if (index == null || index == lastIndex) { return; }
 		
-		var labels = tabbedbar.labels;
-		
-		var tab = e.source;
-		tab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-on' }) );
-  		if (labels[index].imageOn) { tab.children[0].image = labels[index].imageOn; }
-  		if (labels[index].title) { tab.children[1].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-on' }) ); }
-  		
-  		var lastTab = tabbedbar.children[lastIndex];
-		lastTab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-off' }) );
-		if (labels[lastIndex].imageOn) { lastTab.children[0].image = labels[lastIndex].image; }
-		if (labels[lastIndex].title) { lastTab.children[1].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-off' }) ); }
+		updateTab(index, true);
+  		updateTab(lastIndex, false);
 		
 		tabbedbar.index = index;
 	}
@@ -101,3 +88,35 @@ function tabbedbarClick(e) {
 exports.getIndex = function() {
 	return tabbedbar.index;
 };
+
+exports.setIndex = function(index, triggerEvent) {
+	if (OS_IOS && useCustom !== true) {
+		tabbedbar.index = e.index;
+	} else {
+		var lastIndex = tabbedbar.index;
+		if (index == null || index == lastIndex) { return; }
+		
+		updateTab(index, true);
+  		updateTab(lastIndex, false);
+  		
+		tabbedbar.index = index;
+	}
+	triggerEvent && $.trigger('click', { index: index, label: tabbedbar.labels[index] });
+};
+
+function updateTab(index, active) {
+	var status = active ? '-on' : '-off';
+	var label = tabbedbar.labels[index];
+  	var tab = tabbedbar.children[index];
+  	
+	tab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab' + status }) );
+	if (label.imageOn) { 
+		tab.children[0].image = label.image; 
+	}
+	if (label.title) { 
+		tab.children[label.image ? 1 : 0].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title' + status }) ); 
+	}
+}
+
+
+
