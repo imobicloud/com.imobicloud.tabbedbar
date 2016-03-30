@@ -36,15 +36,20 @@ exports.load = function(_G, params) {
 				status = '-on';
 			}
 			var tab = G.UI.create('View', { tabIndex: i, classes: 'imc-tabbedbar-tab imc-tabbedbar-tab' + status });
-				if (i) {
-					params.useDivider && tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider', touchEnabled: false }) );
-				} else {
+				if (i === 0) {
 					tab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-first' }) );
 				}
 				label.width != null && (tab.width = label.width);
 				label.enabled != null && (tab.touchEnabled = label.enabled);
 				label.image && tab.add( G.UI.create('ImageView', { image: icon, classes: 'imc-tabbedbar-icon', touchEnabled: false }) );
 				label.title && tab.add( G.UI.create('Label', { text: label.title, classes: 'imc-tabbedbar-title imc-tabbedbar-title' + status, touchEnabled: false }) );
+				if (params.useDivider) {
+					if (i) {
+						tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider', touchEnabled: false }) );
+					} else {
+						tab.add( G.UI.create('View', { classes: 'imc-tabbedbar-divider imc-tabbedbar-divider-first', touchEnabled: false }) );
+					}
+				}
 		  	tabbedbar.add(tab);
 		};
 		
@@ -80,13 +85,13 @@ function tabbedbarClick(e) {
 		
 		var tab = e.source;
 		tab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-on' }) );
-		tab.children[ labels[index].image ? 1 : 0 ].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-on' }) );
   		if (labels[index].imageOn) { tab.children[0].image = labels[index].imageOn; }
+  		if (labels[index].title) { tab.children[1].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-on' }) ); }
   		
   		var lastTab = tabbedbar.children[lastIndex];
 		lastTab.applyProperties( G.createStyle({ classes: 'imc-tabbedbar-tab-off' }) );
-		lastTab.children[ labels[lastIndex].image ? 1 : 0 ].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-off' }) );
 		if (labels[lastIndex].imageOn) { lastTab.children[0].image = labels[lastIndex].image; }
+		if (labels[lastIndex].title) { lastTab.children[1].applyProperties( G.createStyle({ classes: 'imc-tabbedbar-title-off' }) ); }
 		
 		tabbedbar.index = index;
 	}
