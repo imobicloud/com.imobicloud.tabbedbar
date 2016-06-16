@@ -1,17 +1,13 @@
 /*
-".imc-tabbedbar[platform=ios]": { backgroundColor: '#fff', style: Titanium.UI.iPhone.SystemButtonStyle.BAR }
-".imc-tabbedbar": { width: Ti.UI.SIZE, height: 30, backgroundColor: '#fff', borderColor: '#fff', borderRadius: 3, borderWidth: 1, layout: 'horizontal' }
-	".imc-tabbedbar-tab": {  }
-	".imc-tabbedbar-tab-0": { left: 0 }
-	".imc-tabbedbar-tab-1": { left: 1 }
-	".imc-tabbedbar-tab-off": { backgroundColor: '#000' }
-	".imc-tabbedbar-tab-on": { backgroundColor: 'transparent' }
-		".imc-tabbedbar-icon": {}
-		".imc-tabbedbar-icon-0": {}
-		".imc-tabbedbar-icon-1": {}
-		".imc-tabbedbar-title": { width: Ti.UI.SIZE, left: 12, right: 12, font: { fontSize: 14 } }
-		".imc-tabbedbar-title-0": {}
-		".imc-tabbedbar-title-1": {}
-		".imc-tabbedbar-title-off": { color: '#fff' }
-		".imc-tabbedbar-title-on": { color: '#000' }
+".tabbedbar": { width: Ti.UI.SIZE, height: 29, layout: 'horizontal', 
+	backgroundColor: '#fff', borderColor: '#e52d5b', borderRadius: 4, borderWidth: 1, 
+	index: 0, 
+	labels: [{ title: 'Current Location' }, { title: 'Anywhere' }],
+	Tab: { width: 118, backgroundColor: '#e52d5b' },
+	TabOn: { backgroundColor: '#e52d5b' },
+	TabOff: { backgroundColor: 'transparent' },
+	TabTitle: { font: { fontSize: 12.66, fontFamily: 'Poppins-Regular' } },
+	TabTitleOn: { color: '#fff' },
+	TabTitleOff: { color: '#e52d5b' },
+}
 */
