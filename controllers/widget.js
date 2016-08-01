@@ -6,7 +6,7 @@ function init() {
 		'id', 'children', 
 		'index', 
 		'labels',
-		'Tab', 'TabOn', 'TabOff', 
+		'Tab', 'Tab0', 'Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5', 'Tab6', 'TabOn', 'TabOff', 
 		'TabIcon',
 		'TabTitle', 'TabTitleOn', 'TabTitleOff'
 	];
@@ -19,13 +19,13 @@ function init() {
 /*
  params = {
  	index: 0,
- 	labels: [{ enabled: true, image: '', title: '', width: 100 }]
+ 	labels: [{ enabled: true, image: '', imageOn: '', title: '', width: 100 }]
  }
  * */
 exports.load = function(params) {
 	removeTabs();
-	args.labels = params.labels;
-	args.index = params.index || 0;
+	_.extend(args, params);
+	args.index = args.index || 0;
 	loadTabs();
 };
 
@@ -51,7 +51,7 @@ function loadTabs() {
 			status = 'On';
 		}
 		
-		var tab = $.UI.create('View', _.extend({ tabIndex: i }, args.Tab, args['Tab' + status]));
+		var tab = $.UI.create('View', _.extend({ tabIndex: i }, args.Tab, args['Tab' + i], args['Tab' + status]));
 			label.image && tab.add( $.UI.create('ImageView', _.extend({ touchEnabled: false, image: icon }, args.TabIcon)) );
 			label.title && tab.add( $.UI.create('Label', _.extend({ touchEnabled: false, text: label.title }, args.TabTitle, args['TabTitle' + status])) );
 	  	$.container.add(tab);

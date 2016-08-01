@@ -14,6 +14,8 @@ tss
 		index: 0, 
 		labels: [{ title: 'Current Location' }, { title: 'Anywhere' }],
 		Tab: { width: 118, backgroundColor: '#e52d5b' },
+		Tab0: {},
+		Tab1: {},
 		TabOn: { backgroundColor: '#e52d5b' },
 		TabOff: { backgroundColor: 'transparent' },
 		TabTitle: { font: { fontSize: 12.66, fontFamily: 'Poppins-Regular' } },
