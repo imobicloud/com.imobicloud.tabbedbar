@@ -1,16 +1,25 @@
 var args = $.args;
+var indicator, wrapper;
 
 init();
 function init() {
+	// TODO: DEPRECATED
 	var exclude = [
 		'id', 'children', 
 		'index', 
 		'labels',
+		'Container', 'Wrapper', 'Indicator',
 		'Tab', 'Tab0', 'Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5', 'Tab6', 'TabOn', 'TabOff', 
 		'TabIcon',
 		'TabTitle', 'TabTitleOn', 'TabTitleOff'
 	];
-	$.container.applyProperties(_.omit(args, exclude));
+	var include = _.omit(args, exclude);
+	for (var key in include) {
+		Ti.API.error('com.imobicloud.tabbedbar: ['+ key +'] parameter is DEPRECATED in favor of [Container] parameter');
+	}
+	$.container.applyProperties(include);
+	
+	args.Container && $.container.applyProperties(args.Container);
 	
 	args.index = args.index || 0;
 	args.labels && loadTabs();
@@ -39,6 +48,18 @@ function loadTabs() {
   	var labels = args.labels,
 		index = args.index || 0;
 	
+	if (args.Indicator) {
+		if (args.Indicator) {
+			indicator = $.UI.create('View', args.Indicator);
+			$.container.add(indicator);
+		}
+		
+		wrapper = $.UI.create('View', args.Wrapper);
+		$.container.add(wrapper);
+	} else {
+		wrapper = $.container;
+	}
+	
 	for(var i=0,ii=labels.length; i<ii; i++){
 		var label = labels[i];
 		
@@ -54,12 +75,14 @@ function loadTabs() {
 		var tab = $.UI.create('View', _.extend({ tabIndex: i }, args.Tab, args['Tab' + i], args['Tab' + status]));
 			label.image && tab.add( $.UI.create('ImageView', _.extend({ touchEnabled: false, image: icon }, args.TabIcon)) );
 			label.title && tab.add( $.UI.create('Label', _.extend({ touchEnabled: false, text: label.title }, args.TabTitle, args['TabTitle' + status])) );
-	  	$.container.add(tab);
+	  	wrapper.add(tab);
 	};
 }
 
 function removeTabs() {
   	$.container.removeAllChildren();
+	indicator = null;
+	wrapper = null;
 }
 
 function tabbedbarClick(e) {
@@ -85,16 +108,20 @@ exports.setIndex = setIndex;
 function updateTab(index, active) {
 	var status = active ? 'On' : 'Off';
 	var label = args.labels[index];
-  	var tab = $.container.children[index];
+  	var tab = wrapper.children[index];
   	
-	tab.applyProperties( args['Tab' + status] );
+	if (args['Tab' + status]) {
+		tab.applyProperties( args['Tab' + status] );
+	}
 	if (label.imageOn) { 
 		tab.children[0].image = active ? label.imageOn : label.image; 
 	}
-	if (label.title) { 
+	if (label.title && args['TabTitle' + status]) { 
 		tab.children[label.image ? 1 : 0].applyProperties( args['TabTitle' + status] ); 
 	}
+	
+	if (active && args.Indicator) {
+		var left = index * ( (tab.left || 0) + tab.width );
+		indicator.animate({ left: left, duration: 400 });
+	}
 }
-
-
-

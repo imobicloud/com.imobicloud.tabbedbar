@@ -9,8 +9,11 @@ xml
 
 tss
 
-	".tabbedbar": { width: Ti.UI.SIZE, height: 29, layout: 'horizontal', 
-		backgroundColor: '#fff', borderColor: '#e52d5b', borderRadius: 4, borderWidth: 1, 
+	".tabbedbar": { 
+		Container: { 
+			width: Ti.UI.SIZE, height: 29, layout: 'horizontal', 
+			backgroundColor: '#fff', borderColor: '#e52d5b', borderRadius: 4, borderWidth: 1, 
+		}, 
 		index: 0, 
 		labels: [{ title: 'Current Location' }, { title: 'Anywhere' }],
 		Tab: { width: 118, backgroundColor: '#e52d5b' },
@@ -46,6 +49,45 @@ js
 	
 Change log:
 
+- 04/07/2017
+	+ Deprecate inline styles
+    + Add [Container] parameter to replace inline styles. 
+	
+		- old:
+		".tabbedbar": { width: Ti.UI.SIZE, height: 29, layout: 'horizontal', 
+			backgroundColor: '#fff', borderColor: '#e52d5b', borderRadius: 4, borderWidth: 1, 
+			index: 0, 
+			labels: [{ title: 'Current Location' }, { title: 'Anywhere' }],
+			Tab: { width: 118, backgroundColor: '#e52d5b' },
+			Tab0: {},
+			Tab1: {},
+			TabOn: { backgroundColor: '#e52d5b' },
+			TabOff: { backgroundColor: 'transparent' },
+			TabTitle: { font: { fontSize: 12.66, fontFamily: 'Poppins-Regular' } },
+			TabTitleOn: { color: '#fff' },
+			TabTitleOff: { color: '#e52d5b' },
+		}
+		- new:
+		".tabbedbar": { 
+			Container: { 
+				width: Ti.UI.SIZE, height: 29, layout: 'horizontal', 
+				backgroundColor: '#fff', borderColor: '#e52d5b', borderRadius: 4, borderWidth: 1, 
+			}, 
+			index: 0, 
+			labels: [{ title: 'Current Location' }, { title: 'Anywhere' }],
+			Tab: { width: 118, backgroundColor: '#e52d5b' },
+			Tab0: {},
+			Tab1: {},
+			TabOn: { backgroundColor: '#e52d5b' },
+			TabOff: { backgroundColor: 'transparent' },
+			TabTitle: { font: { fontSize: 12.66, fontFamily: 'Poppins-Regular' } },
+			TabTitleOn: { color: '#fff' },
+			TabTitleOff: { color: '#e52d5b' },
+		}
+		
+	+ Add [Wrapper] parameter.
+	+ Add [Indicator] parameter.
+	
 - 16/06/2016
 	+ Use local styles, we don't have to put the styles in app.tss anymore
 	+ Change styles syntax
