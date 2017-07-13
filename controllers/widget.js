@@ -48,11 +48,10 @@ function loadTabs() {
   	var labels = args.labels,
 		index = args.index || 0;
 	
-	if (args.Indicator) {
-		if (args.Indicator) {
-			indicator = $.UI.create('View', args.Indicator);
-			$.container.add(indicator);
-		}
+	var _Indicator = args.Indicator;
+	if (_Indicator) {
+		indicator = $.UI.create('View', _.extend(_Indicator, {left: index * _Indicator.width}));
+		$.container.add(indicator);
 		
 		wrapper = $.UI.create('View', args.Wrapper);
 		$.container.add(wrapper);
